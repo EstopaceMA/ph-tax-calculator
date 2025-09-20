@@ -37,27 +37,27 @@ const FAQs: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-            <HelpCircle className="w-6 h-6 text-purple-600" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+            <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
-            <p className="text-gray-600">Common tax questions answered in plain language</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p className="text-sm sm:text-base text-gray-600">Common tax questions answered in plain language</p>
           </div>
         </div>
 
         {/* Language Toggle */}
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-gray-600" />
-            <span className="text-sm font-medium text-gray-700">Language:</span>
+            <span className="text-sm sm:text-base font-medium text-gray-700">Language:</span>
           </div>
           <div className="flex bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setLanguage('en')}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 sm:py-1 rounded-md text-sm font-medium transition-colors ${
                 language === 'en'
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
@@ -67,7 +67,7 @@ const FAQs: React.FC = () => {
             </button>
             <button
               onClick={() => setLanguage('fil')}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 sm:py-1 rounded-md text-sm font-medium transition-colors ${
                 language === 'fil'
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
@@ -79,7 +79,7 @@ const FAQs: React.FC = () => {
         </div>
 
         {/* Search and Filter */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
@@ -87,13 +87,13 @@ const FAQs: React.FC = () => {
               placeholder="Search questions, answers, or tags..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2.5 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {categories.map(category => (
               <option key={category.id} value={category.id}>
@@ -116,18 +116,18 @@ const FAQs: React.FC = () => {
               {/* Question */}
               <button
                 onClick={() => toggleFAQ(faq.id)}
-                className="w-full p-6 text-left hover:bg-gray-50 transition-colors"
+                className="w-full p-4 sm:p-6 text-left hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 pr-2 sm:pr-4 leading-relaxed">
                       {question}
                     </h3>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                       {faq.tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs"
+                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs sm:text-xs"
                         >
                           {tag}
                         </span>
@@ -144,24 +144,24 @@ const FAQs: React.FC = () => {
 
               {/* Answer */}
               {isExpanded && (
-                <div className="px-6 pb-6 border-t border-gray-100">
-                  <div className="pt-4">
-                    <p className="text-gray-700 leading-relaxed mb-4">
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-gray-100">
+                  <div className="pt-3 sm:pt-4">
+                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
                       {answer}
                     </p>
 
                     {/* Related Forms */}
                     {faq.relatedForms && faq.relatedForms.length > 0 && (
-                      <div className="pt-4 border-t border-gray-100">
-                        <h4 className="font-medium text-gray-900 mb-2 flex items-center gap-2">
+                      <div className="pt-3 sm:pt-4 border-t border-gray-100">
+                        <h4 className="text-sm sm:text-base font-medium text-gray-900 mb-2 flex items-center gap-2">
                           <FileText className="w-4 h-4 text-blue-600" />
                           Related Forms
                         </h4>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {faq.relatedForms.map((form, index) => (
                             <span
                               key={index}
-                              className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+                              className="bg-blue-100 text-blue-800 px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
                             >
                               BIR Form {form}
                             </span>
@@ -172,14 +172,14 @@ const FAQs: React.FC = () => {
 
                     {/* Alternative Language */}
                     {((language === 'en' && faq.answerFil) || (language === 'fil' && faq.answer !== answer)) && (
-                      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="mt-3 sm:mt-4 p-3 bg-gray-50 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                           <Globe className="w-4 h-4 text-gray-600" />
-                          <span className="text-sm font-medium text-gray-700">
+                          <span className="text-xs sm:text-sm font-medium text-gray-700">
                             {language === 'en' ? 'Filipino Translation:' : 'English Translation:'}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                           {language === 'en' ? faq.answerFil : faq.answer}
                         </p>
                       </div>
@@ -193,17 +193,17 @@ const FAQs: React.FC = () => {
       </div>
 
       {filteredFAQs.length === 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-          <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No questions found</h3>
-          <p className="text-gray-600">Try adjusting your search or filter criteria.</p>
+        <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 text-center">
+          <HelpCircle className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No questions found</h3>
+          <p className="text-sm sm:text-base text-gray-600">Try adjusting your search or filter criteria.</p>
         </div>
       )}
 
       {/* Additional Help */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-        <h3 className="font-medium text-blue-900 mb-2">Still have questions?</h3>
-        <p className="text-sm text-blue-700 mb-3">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6">
+        <h3 className="text-sm sm:text-base font-medium text-blue-900 mb-2">Still have questions?</h3>
+        <p className="text-xs sm:text-sm text-blue-700 mb-3 leading-relaxed">
           Can't find the answer you're looking for? Visit the official BIR website or contact your local Revenue District Office for assistance.
         </p>
         <div className="flex flex-wrap gap-2">
@@ -211,7 +211,7 @@ const FAQs: React.FC = () => {
             href="https://www.bir.gov.ph"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-sm"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium text-xs sm:text-sm"
           >
             <Globe className="w-4 h-4" />
             Visit BIR Website

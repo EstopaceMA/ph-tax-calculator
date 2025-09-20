@@ -47,38 +47,38 @@ const FormsLibrary: React.FC = () => {
   };
 
   const renderFormDetails = (form: BIRForm) => (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-sm font-bold">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+            <span className="bg-gray-900 text-white px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">
               BIR Form {form.formNumber}
             </span>
-            <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${getCategoryColor(form.category)}-100 text-${getCategoryColor(form.category)}-800`}>
+            <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${getCategoryColor(form.category)}-100 text-${getCategoryColor(form.category)}-800 whitespace-nowrap`}>
               <FileText className="w-3 h-3" />
               {form.category}
             </div>
             {form.frequency && (
-              <span className="text-sm text-gray-600 flex items-center gap-1">
+              <span className="text-xs sm:text-sm text-gray-600 flex items-center gap-1 whitespace-nowrap">
                 {getFrequencyIcon(form.frequency)} {form.frequency}
               </span>
             )}
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">{form.title}</h3>
-          <p className="text-gray-600 mb-4">{form.description}</p>
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{form.title}</h3>
+          <p className="text-sm sm:text-base text-gray-600 mb-4">{form.description}</p>
 
           {form.dueDate && (
-            <div className="flex items-center gap-2 text-sm text-orange-700 mb-4">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-orange-700 mb-4">
               <Calendar className="w-4 h-4" />
               <span>Due: {form.dueDate}</span>
             </div>
           )}
         </div>
 
-        <div className="flex flex-col gap-2 ml-4">
+        <div className="flex flex-col gap-2 w-full sm:w-auto sm:ml-4 mt-3 sm:mt-0">
           <button
             onClick={() => window.open('https://www.bir.gov.ph', '_blank')}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium w-full sm:w-auto"
           >
             <Download className="w-4 h-4" />
             Download
@@ -160,19 +160,19 @@ const FormsLibrary: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-            <FileText className="w-6 h-6 text-green-600" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+            <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Tax Forms Library</h2>
-            <p className="text-gray-600">Complete collection of BIR forms with filing guidance</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Tax Forms Library</h2>
+            <p className="text-sm sm:text-base text-gray-600">Complete collection of BIR forms with filing guidance</p>
           </div>
         </div>
 
         {/* Search and Filter */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
@@ -180,7 +180,7 @@ const FormsLibrary: React.FC = () => {
               placeholder="Search forms by number, title, or description..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div className="flex gap-2">
@@ -188,7 +188,7 @@ const FormsLibrary: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="px-3 py-2.5 sm:py-2 text-base sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               {categories.map(category => (
                 <option key={category.id} value={category.id}>
@@ -206,52 +206,52 @@ const FormsLibrary: React.FC = () => {
           const color = getCategoryColor(form.category);
 
           return (
-            <div key={form.formNumber} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer" onClick={() => setSelectedForm(form)}>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-sm font-bold">
+            <div key={form.formNumber} className="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow cursor-pointer" onClick={() => setSelectedForm(form)}>
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-0">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <span className="bg-gray-900 text-white px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">
                       BIR Form {form.formNumber}
                     </span>
-                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800`}>
+                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800 whitespace-nowrap`}>
                       <FileText className="w-3 h-3" />
                       {form.category}
                     </div>
                     {form.frequency && (
-                      <span className="text-sm text-gray-600 flex items-center gap-1">
+                      <span className="text-xs sm:text-sm text-gray-600 flex items-center gap-1 whitespace-nowrap">
                         {getFrequencyIcon(form.frequency)} {form.frequency}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{form.title}</h3>
-                  <p className="text-gray-600 mb-3">{form.description}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 break-words">{form.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600 mb-3 break-words">{form.description}</p>
 
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3">
                     {form.applicableTo.slice(0, 3).map((item, index) => (
-                      <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                      <span key={index} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs break-words">
                         {item}
                       </span>
                     ))}
                     {form.applicableTo.length > 3 && (
-                      <span className="text-gray-500 text-xs">+{form.applicableTo.length - 3} more</span>
+                      <span className="text-gray-500 text-xs whitespace-nowrap">+{form.applicableTo.length - 3} more</span>
                     )}
                   </div>
 
                   {form.dueDate && (
-                    <div className="flex items-center gap-2 text-sm text-orange-700">
-                      <Calendar className="w-4 h-4" />
-                      <span>Due: {form.dueDate}</span>
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-orange-700">
+                      <Calendar className="w-4 h-4 flex-shrink-0" />
+                      <span className="break-words">Due: {form.dueDate}</span>
                     </div>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-2 ml-4">
+                <div className="flex flex-col sm:flex-row gap-2 sm:ml-4 w-full sm:w-auto">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       window.open('https://www.bir.gov.ph', '_blank');
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                    className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm font-medium w-full sm:w-auto"
                   >
                     <Download className="w-4 h-4" />
                     Download
@@ -261,7 +261,7 @@ const FormsLibrary: React.FC = () => {
                       e.stopPropagation();
                       setSelectedForm(form);
                     }}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
+                    className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm font-medium w-full sm:w-auto"
                   >
                     <FileText className="w-4 h-4" />
                     Details

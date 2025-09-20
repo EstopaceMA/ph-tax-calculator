@@ -47,14 +47,14 @@ const TaxRates: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-            <DollarSign className="w-6 h-6 text-green-600" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+            <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Tax Rates & Tables</h2>
-            <p className="text-gray-600">Current tax rates and contribution schedules</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Tax Rates & Tables</h2>
+            <p className="text-sm sm:text-base text-gray-600">Current tax rates and contribution schedules</p>
           </div>
         </div>
 
@@ -64,7 +64,7 @@ const TaxRates: React.FC = () => {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -81,7 +81,7 @@ const TaxRates: React.FC = () => {
         const color = getCategoryColor(taxRate.category);
 
         return (
-          <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+          <div key={index} className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">

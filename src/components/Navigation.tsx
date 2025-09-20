@@ -7,7 +7,7 @@ interface NavigationProps {
   onSectionChange: (section: DirectorySection) => void;
 }
 
-const navigationItems: { id: DirectorySection; name: string; icon: any; description: string }[] = [
+const navigationItems: { id: DirectorySection; name: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
   {
     id: 'calculators',
     name: 'Tax Calculators',

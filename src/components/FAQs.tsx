@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { HelpCircle, Search, ChevronDown, ChevronUp, Globe, FileText } from 'lucide-react';
-import { FAQ } from '../types/directory';
 import { FAQS } from '../data/faqs';
 
 const FAQs: React.FC = () => {

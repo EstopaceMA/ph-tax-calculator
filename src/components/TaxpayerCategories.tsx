@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, Building, Store, Heart, ChevronRight, Calendar, FileText, Clock, CheckCircle, Users } from 'lucide-react';
-import { TaxpayerCategory, TaxpayerSubcategory } from '../types/directory';
+import { TaxpayerSubcategory } from '../types/directory';
 import { TAXPAYER_CATEGORIES } from '../data/taxpayerCategories';
 
 const getIconComponent = (iconName: string) => {

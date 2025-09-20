@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Filter, Clock, AlertTriangle, CheckCircle, Users, Building, Receipt } from 'lucide-react';
+import { Calendar, Clock, AlertTriangle, CheckCircle, Users, Building, Receipt } from 'lucide-react';
 
 interface TaxDeadline {
   id: string;

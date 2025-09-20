@@ -134,8 +134,8 @@ const TaxpayerCategories: React.FC = () => {
             <Users className="w-6 h-6 text-blue-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Taxpayer Categories Directory</h2>
-            <p className="text-gray-600">Tax obligations and requirements by taxpayer type</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Taxpayer Categories</h2>
+            <p className="text-sm sm:text-base text-gray-600">Tax obligations and requirements by taxpayer type</p>
           </div>
         </div>
       </div>
@@ -163,9 +163,8 @@ const TaxpayerCategories: React.FC = () => {
                   </div>
                 </div>
                 <ChevronRight
-                  className={`w-5 h-5 text-gray-400 transition-transform ${
-                    isExpanded ? 'rotate-90' : ''
-                  }`}
+                  className={`w-5 h-5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''
+                    }`}
                 />
               </div>
             </button>
@@ -188,9 +187,8 @@ const TaxpayerCategories: React.FC = () => {
                             <p className="text-sm text-gray-600">{subcategory.description}</p>
                           </div>
                           <ChevronRight
-                            className={`w-4 h-4 text-gray-400 transition-transform ${
-                              selectedSubcategory === subcategory.id ? 'rotate-90' : ''
-                            }`}
+                            className={`w-4 h-4 text-gray-400 transition-transform ${selectedSubcategory === subcategory.id ? 'rotate-90' : ''
+                              }`}
                           />
                         </div>
                       </button>

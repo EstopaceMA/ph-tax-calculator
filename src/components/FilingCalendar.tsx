@@ -191,8 +191,8 @@ const FilingCalendar: React.FC = () => {
             <Calendar className="w-6 h-6 text-orange-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Filing Calendar</h2>
-            <p className="text-gray-600">Tax deadlines and filing reminders by taxpayer type</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Filing Calendar</h2>
+            <p className="text-sm sm:text-base text-gray-600">Tax deadlines and filing reminders by taxpayer type</p>
           </div>
         </div>
 

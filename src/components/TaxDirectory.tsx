@@ -97,7 +97,7 @@ const TaxDirectory: React.FC = () => {
         {/* Footer */}
         <footer className="mt-8 sm:mt-12 text-center py-6 border-t border-gray-200">
           <div className="text-xs sm:text-sm text-gray-600 px-4">
-            <p className="mb-2">© 2025 Philippines Tax Calculator. All rights reserved.</p>
+            <p className="mb-2">© 2025 Philippines Tax Directory. All rights reserved.</p>
             <p>Part of <a href="https://www.bettergov.ph/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">BetterGov.ph</a></p>
           </div>
         </footer>

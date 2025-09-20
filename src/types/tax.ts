@@ -39,3 +39,32 @@ export interface TaxCalculation {
   netSalary: number;
   taxBracket: string;
 }
+
+export type TaxType =
+  | 'compensation'
+  | 'vat';
+
+export interface TaxTypeInfo {
+  id: TaxType;
+  name: string;
+  description: string;
+  rate?: string;
+  applicableTo: string;
+}
+
+export const TAX_TYPES: TaxTypeInfo[] = [
+  {
+    id: 'compensation',
+    name: 'Compensation Income Tax',
+    description: 'Tax on salaries, wages, and other compensation from employment',
+    rate: '0% - 35%',
+    applicableTo: 'Employees and workers'
+  },
+  {
+    id: 'vat',
+    name: 'Value Added Tax (VAT)',
+    description: 'Tax on sale of goods and services',
+    rate: '12%',
+    applicableTo: 'VAT-registered businesses'
+  }
+];

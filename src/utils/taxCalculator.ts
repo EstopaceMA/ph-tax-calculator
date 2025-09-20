@@ -1,7 +1,6 @@
 import { TaxBracket, ContributionRates, TaxCalculation } from '../types/tax';
 
 // 2025 Philippines Tax Brackets (BIR)
-// reference: https://www.bir.gov.ph/income-tax
 export const TAX_BRACKETS: TaxBracket[] = [
   { min: 0, max: 250000, rate: 0, baseAmount: 0 },
   { min: 250000, max: 400000, rate: 0.20, baseAmount: 0 },
@@ -104,4 +103,28 @@ export function calculateTax(monthlySalary: number): TaxCalculation {
     netSalary,
     taxBracket
   };
+}
+
+export function calculateVAT(amount: number, isVATInclusive: boolean = false): { vatAmount: number; netAmount: number; grossAmount: number } {
+  const vatRate = 0.12; // 12% VAT
+
+  if (isVATInclusive) {
+    // Amount already includes VAT
+    const netAmount = amount / (1 + vatRate);
+    const vatAmount = amount - netAmount;
+    return {
+      vatAmount,
+      netAmount,
+      grossAmount: amount
+    };
+  } else {
+    // Amount is VAT-exclusive
+    const vatAmount = amount * vatRate;
+    const grossAmount = amount + vatAmount;
+    return {
+      vatAmount,
+      netAmount: amount,
+      grossAmount
+    };
+  }
 }

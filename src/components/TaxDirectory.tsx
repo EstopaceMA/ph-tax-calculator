@@ -1,0 +1,109 @@
+import React, { useState } from 'react';
+import { Calculator, Info } from 'lucide-react';
+import { TaxType } from '../types/tax';
+import { DirectorySection } from '../types/directory';
+import Navigation from './Navigation';
+import TaxTypeSelector from './TaxTypeSelector';
+import CompensationTaxCalculator from './CompensationTaxCalculator';
+import VATCalculator from './VATCalculator';
+import TaxpayerCategories from './TaxpayerCategories';
+import FormsLibrary from './FormsLibrary';
+import FilingCalendar from './FilingCalendar';
+import TaxRates from './TaxRates';
+import FAQs from './FAQs';
+
+const TaxDirectory: React.FC = () => {
+  const [activeSection, setActiveSection] = useState<DirectorySection>('calculators');
+  const [selectedTaxType, setSelectedTaxType] = useState<TaxType>('compensation');
+
+  const renderCalculator = () => {
+    switch (selectedTaxType) {
+      case 'compensation':
+        return <CompensationTaxCalculator />;
+      case 'vat':
+        return <VATCalculator />;
+      default:
+        return <CompensationTaxCalculator />;
+    }
+  };
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'calculators':
+        return (
+          <>
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            {renderCalculator()}
+          </>
+        );
+      case 'taxpayer-categories':
+        return <TaxpayerCategories />;
+      case 'forms-library':
+        return <FormsLibrary />;
+      case 'filing-calendar':
+        return <FilingCalendar />;
+      case 'tax-rates':
+        return <TaxRates />;
+      case 'faqs':
+        return <FAQs />;
+      default:
+        return (
+          <>
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            {renderCalculator()}
+          </>
+        );
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Navigation */}
+      <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-600 text-white rounded-full mb-3 sm:mb-4">
+            <Calculator className="w-6 h-6 sm:w-8 sm:h-8" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 px-4">
+            Philippines Tax Directory
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4 leading-relaxed">
+            Your comprehensive guide to Philippine taxation - calculators, forms, deadlines, and resources
+            for individuals, businesses, and organizations.
+          </p>
+        </div>
+
+        {/* Dynamic Content */}
+        {renderContent()}
+
+        {/* Disclaimer */}
+        <div className="mt-6 sm:mt-8 bg-yellow-50 border border-yellow-200 rounded-xl p-4 sm:p-6">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <h4 className="font-medium text-yellow-800 mb-2">Important Disclaimer</h4>
+              <p className="text-xs sm:text-sm text-yellow-700 leading-relaxed">
+                This tax directory provides information based on current BIR tax rates, regulations, and forms.
+                Tax calculations, deadlines, and requirements may vary based on specific circumstances, available deductions, exemptions, or policy changes.
+                Please consult with a tax professional or the <a href="https://www.bir.gov.ph/" target="_blank" rel="noopener noreferrer" className="text-yellow-800 hover:text-yellow-900 underline font-medium">Bureau of Internal Revenue (BIR)</a> for official guidance and the most up-to-date information.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="mt-8 sm:mt-12 text-center py-6 border-t border-gray-200">
+          <div className="text-xs sm:text-sm text-gray-600 px-4">
+            <p className="mb-2">© 2025 Philippines Tax Calculator. All rights reserved.</p>
+            <p>Part of <a href="https://www.bettergov.ph/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">BetterGov.ph</a></p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default TaxDirectory;

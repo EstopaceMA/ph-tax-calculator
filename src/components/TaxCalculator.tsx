@@ -49,7 +49,7 @@ const TaxCalculator: React.FC = () => {
             <div>
               <h4 className="font-medium text-yellow-800 mb-2">Important Disclaimer</h4>
               <p className="text-sm text-yellow-700 leading-relaxed">
-                This calculator uses current BIR tax rates and regulations for educational purposes.
+                This calculator uses current BIR tax rates and regulations.
                 Actual tax calculations may vary based on specific circumstances, available deductions, exemptions, or policy changes.
                 Please consult with a tax professional or the <a href="https://www.bir.gov.ph/" target="_blank" rel="noopener noreferrer" className="text-yellow-800 hover:text-yellow-900 underline font-medium">Bureau of Internal Revenue (BIR)</a> for official tax computations.
               </p>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Calculator, Info } from 'lucide-react';
 import { TaxType } from '../types/tax';
 import { DirectorySection } from '../types/directory';
@@ -13,8 +14,34 @@ import TaxRates from './TaxRates';
 import FAQs from './FAQs';
 
 const TaxDirectory: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<DirectorySection>('calculators');
-  const [selectedTaxType, setSelectedTaxType] = useState<TaxType>('compensation');
+  const location = useLocation();
+  const { taxType } = useParams<{ taxType?: string }>();
+  const navigate = useNavigate();
+
+  // Determine current section from pathname
+  const getCurrentSection = (): DirectorySection => {
+    const path = location.pathname.slice(1); // Remove leading slash
+    const section = path.split('/')[0];
+
+    const validSections: DirectorySection[] = ['tax-calculators', 'taxpayer-categories', 'forms-library', 'filing-calendar', 'tax-rates', 'faqs'];
+    return validSections.includes(section as DirectorySection) ? section as DirectorySection : 'tax-calculators';
+  };
+
+  // Determine current tax type from URL parameter or default
+  const getCurrentTaxType = (): TaxType => {
+    if (taxType && ['compensation', 'vat'].includes(taxType as TaxType)) {
+      return taxType as TaxType;
+    }
+    return 'compensation';
+  };
+
+  const activeSection = getCurrentSection();
+  const selectedTaxType = getCurrentTaxType();
+
+  // Handle tax type change within calculators
+  const handleTaxTypeChange = (newTaxType: TaxType) => {
+    navigate(`/tax-calculators/${newTaxType}`);
+  };
 
   const renderCalculator = () => {
     switch (selectedTaxType) {
@@ -29,10 +56,10 @@ const TaxDirectory: React.FC = () => {
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'calculators':
+      case 'tax-calculators':
         return (
           <>
-            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={handleTaxTypeChange} />
             {renderCalculator()}
           </>
         );
@@ -49,7 +76,7 @@ const TaxDirectory: React.FC = () => {
       default:
         return (
           <>
-            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={handleTaxTypeChange} />
             {renderCalculator()}
           </>
         );
@@ -59,7 +86,7 @@ const TaxDirectory: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Navigation */}
-      <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
+      <Navigation />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}

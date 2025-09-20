@@ -1,5 +1,5 @@
 export type DirectorySection =
-  | 'calculators'
+  | 'tax-calculators'
   | 'taxpayer-categories'
   | 'forms-library'
   | 'filing-calendar'

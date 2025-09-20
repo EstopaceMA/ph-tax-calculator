@@ -1,54 +1,68 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Calculator, Users, FileText, Calendar, DollarSign, HelpCircle, Menu, X } from 'lucide-react';
 import { DirectorySection } from '../types/directory';
 
-interface NavigationProps {
-  activeSection: DirectorySection;
-  onSectionChange: (section: DirectorySection) => void;
-}
-
-const navigationItems: { id: DirectorySection; name: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
+const navigationItems: { id: DirectorySection; name: string; path: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
   {
-    id: 'calculators',
+    id: 'tax-calculators',
     name: 'Tax Calculators',
+    path: '/tax-calculators/compensation',
     icon: Calculator,
     description: 'Calculate taxes and contributions'
   },
   {
     id: 'taxpayer-categories',
     name: 'Taxpayer Categories',
+    path: '/taxpayer-categories',
     icon: Users,
     description: 'Tax obligations by taxpayer type'
   },
   {
     id: 'forms-library',
     name: 'Forms Library',
+    path: '/forms-library',
     icon: FileText,
     description: 'BIR forms and filing guides'
   },
   {
     id: 'filing-calendar',
     name: 'Filing Calendar',
+    path: '/filing-calendar',
     icon: Calendar,
     description: 'Tax deadlines and reminders'
   },
   {
     id: 'tax-rates',
     name: 'Tax Rates & Tables',
+    path: '/tax-rates',
     icon: DollarSign,
     description: 'Current tax rates and brackets'
   },
   {
     id: 'faqs',
     name: 'FAQs',
+    path: '/faqs',
     icon: HelpCircle,
     description: 'Frequently asked questions'
   }
 ];
 
-const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange }) => {
+const Navigation: React.FC = () => {
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+
+  // Determine active section from current path
+  const getActiveSection = (): DirectorySection => {
+    const path = location.pathname.slice(1); // Remove leading slash
+    const section = path.split('/')[0];
+
+    const validSections: DirectorySection[] = ['tax-calculators', 'taxpayer-categories', 'forms-library', 'filing-calendar', 'tax-rates', 'faqs'];
+    return validSections.includes(section as DirectorySection) ? section as DirectorySection : 'tax-calculators';
+  };
+
+  const activeSection = getActiveSection();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -64,8 +78,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
     <>
       {/* Modern Sticky Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50'
-          : 'bg-white/80 backdrop-blur-sm shadow-lg'
+        ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50'
+        : 'bg-white/80 backdrop-blur-sm shadow-lg'
         }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Desktop Navigation */}
@@ -87,12 +101,12 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                 const isActive = activeSection === item.id;
 
                 return (
-                  <button
+                  <Link
                     key={item.id}
-                    onClick={() => onSectionChange(item.id)}
+                    to={item.path}
                     className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium group ${isActive
-                        ? 'text-blue-600 bg-blue-50/80'
-                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50'
+                      ? 'text-blue-600 bg-blue-50/80'
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50'
                       }`}
                     title={item.description}
                   >
@@ -102,7 +116,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                     {isActive && (
                       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" />
                     )}
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -141,15 +155,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                 const isActive = activeSection === item.id;
 
                 return (
-                  <button
+                  <Link
                     key={item.id}
-                    onClick={() => {
-                      onSectionChange(item.id);
-                      setIsMobileMenuOpen(false);
-                    }}
+                    to={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${isActive
-                        ? 'bg-blue-50 text-blue-600 shadow-sm'
-                        : 'text-gray-700 hover:bg-gray-50/80'
+                      ? 'bg-blue-50 text-blue-600 shadow-sm'
+                      : 'text-gray-700 hover:bg-gray-50/80'
                       }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -157,7 +169,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                       <div className="font-medium">{item.name}</div>
                       <div className="text-xs text-gray-500 mt-0.5">{item.description}</div>
                     </div>
-                  </button>
+                  </Link>
                 );
               })}
             </div>

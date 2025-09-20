@@ -48,14 +48,40 @@ const navigationItems: { id: DirectorySection; name: string; icon: any; descript
 
 const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 100;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <nav className="hidden lg:block bg-white rounded-xl shadow-lg mb-6 sticky top-4 z-10">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-8">
+      {/* Modern Sticky Navigation */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50'
+          : 'bg-white/80 backdrop-blur-sm shadow-lg'
+        }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center justify-between h-16">
+            {/* Logo/Brand */}
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center">
+                <Calculator className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+                PH Tax Directory
+              </span>
+            </div>
+
+            {/* Navigation Items */}
+            <div className="flex items-center space-x-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.id;
@@ -64,44 +90,52 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                   <button
                     key={item.id}
                     onClick={() => onSectionChange(item.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 text-sm font-medium group ${
-                      isActive
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
-                    }`}
+                    className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium group ${isActive
+                        ? 'text-blue-600 bg-blue-50/80'
+                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50'
+                      }`}
                     title={item.description}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{item.name}</span>
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span className="hidden 2xl:inline whitespace-nowrap">{item.name}</span>
+                    <span className="hidden lg:inline 2xl:hidden whitespace-nowrap">{item.name.split(' ')[0]}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" />
+                    )}
                   </button>
                 );
               })}
             </div>
           </div>
-        </div>
-      </nav>
 
-      {/* Mobile Navigation */}
-      <div className="lg:hidden mb-6">
-        {/* Mobile Menu Button */}
-        <div className="bg-white rounded-xl shadow-lg p-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">
-              {navigationItems.find(item => item.id === activeSection)?.name}
-            </h3>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+          {/* Mobile Navigation */}
+          <div className="lg:hidden">
+            <div className="flex items-center justify-between h-16">
+              {/* Mobile Logo/Brand */}
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center">
+                  <Calculator className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+                  PH Tax Directory
+                </span>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 rounded-lg transition-all duration-200"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="mt-2 bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="py-2">
+          <div className="lg:hidden border-t border-gray-200/50 bg-white/95 backdrop-blur-lg">
+            <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.id;
@@ -113,16 +147,15 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
                       onSectionChange(item.id);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                      isActive
-                        ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${isActive
+                        ? 'bg-blue-50 text-blue-600 shadow-sm'
+                        : 'text-gray-700 hover:bg-gray-50/80'
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                     <div>
                       <div className="font-medium">{item.name}</div>
-                      <div className="text-xs text-gray-500">{item.description}</div>
+                      <div className="text-xs text-gray-500 mt-0.5">{item.description}</div>
                     </div>
                   </button>
                 );
@@ -130,7 +163,10 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, onSectionChange 
             </div>
           </div>
         )}
-      </div>
+      </nav>
+
+      {/* Spacer to prevent content from hiding behind fixed nav */}
+      <div className="h-16" />
     </>
   );
 };

@@ -33,14 +33,14 @@ const VATCalculator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <FileText className="w-6 h-6 text-blue-600" />
-          <h2 className="text-xl font-semibold text-gray-900">VAT Calculator</h2>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+        <div className="flex items-center gap-3 mb-4 sm:mb-6">
+          <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">VAT Calculator</h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -55,7 +55,7 @@ const VATCalculator: React.FC = () => {
                     onChange={() => setIsVATInclusive(false)}
                     className="mr-2 text-blue-600 focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">VAT Exclusive (add 12% VAT)</span>
+                  <span className="text-xs sm:text-sm text-gray-700">VAT Exclusive (add 12% VAT)</span>
                 </label>
                 <label className="flex items-center">
                   <input
@@ -65,7 +65,7 @@ const VATCalculator: React.FC = () => {
                     onChange={() => setIsVATInclusive(true)}
                     className="mr-2 text-blue-600 focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">VAT Inclusive (extract 12% VAT)</span>
+                  <span className="text-xs sm:text-sm text-gray-700">VAT Inclusive (extract 12% VAT)</span>
                 </label>
               </div>
             </div>
@@ -81,31 +81,31 @@ const VATCalculator: React.FC = () => {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ''))}
                   placeholder="10,000"
-                  className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full pl-8 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                 />
               </div>
             </div>
           </div>
 
           {calculation && (
-            <div className="space-y-4">
-              <div className="bg-purple-50 rounded-lg p-4">
+            <div className="space-y-4 lg:space-y-0">
+              <div className="bg-purple-50 rounded-lg p-3 sm:p-4">
                 <h3 className="font-medium text-purple-900 mb-3 flex items-center gap-2">
                   <Calculator className="w-4 h-4" />
-                  VAT Calculation (12%)
+                  <span className="text-sm sm:text-base">VAT Calculation (12%)</span>
                 </h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-purple-700">Net Amount (VAT Exclusive):</span>
-                    <span className="font-medium text-purple-900">{formatCurrency(calculation.netAmount)}</span>
+                <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-start">
+                    <span className="text-purple-700 flex-1 pr-2">Net Amount (VAT Exclusive):</span>
+                    <span className="font-medium text-purple-900 text-right">{formatCurrency(calculation.netAmount)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-purple-700">VAT Amount (12%):</span>
-                    <span className="font-medium text-purple-900">{formatCurrency(calculation.vatAmount)}</span>
+                  <div className="flex justify-between items-start">
+                    <span className="text-purple-700 flex-1 pr-2">VAT Amount (12%):</span>
+                    <span className="font-medium text-purple-900 text-right">{formatCurrency(calculation.vatAmount)}</span>
                   </div>
-                  <div className="flex justify-between border-t border-purple-200 pt-2 font-semibold">
-                    <span className="text-purple-900">Gross Amount (VAT Inclusive):</span>
-                    <span className="text-purple-700">{formatCurrency(calculation.grossAmount)}</span>
+                  <div className="flex justify-between items-start border-t border-purple-200 pt-2 font-semibold">
+                    <span className="text-purple-900 flex-1 pr-2">Gross Amount (VAT Inclusive):</span>
+                    <span className="text-purple-700 text-right">{formatCurrency(calculation.grossAmount)}</span>
                   </div>
                 </div>
               </div>
@@ -114,12 +114,12 @@ const VATCalculator: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+      <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 sm:p-4">
         <div className="flex items-start gap-3">
           <FileText className="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" />
           <div>
-            <h4 className="font-medium text-indigo-800 mb-1">VAT Information</h4>
-            <p className="text-sm text-indigo-700">
+            <h4 className="font-medium text-indigo-800 mb-1 text-sm sm:text-base">VAT Information</h4>
+            <p className="text-xs sm:text-sm text-indigo-700 leading-relaxed">
               Value Added Tax (VAT) is currently set at 12% in the Philippines. VAT-registered businesses must charge VAT on their sales
               and can claim input VAT on their purchases. Some goods and services may be VAT-exempt or zero-rated.
             </p>

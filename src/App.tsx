@@ -1,8 +1,8 @@
 import React from 'react';
-import TaxCalculator from './components/TaxCalculator';
+import TaxDirectory from './components/TaxDirectory';
 
 function App() {
-  return <TaxCalculator />;
+  return <TaxDirectory />;
 }
 
 export default App;

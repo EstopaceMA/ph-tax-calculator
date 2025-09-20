@@ -1,6 +1,6 @@
-# Philippines Tax Calculator
+# Philippines Tax Directory
 
-A comprehensive tax calculator for the Philippines.
+A comprehensive tax directory and calculator for the Philippines, featuring modern UI, multiple tax types, forms library, filing calendar, and more.
 
 ## Getting Started
 
@@ -29,6 +29,19 @@ A comprehensive tax calculator for the Philippines.
 
 4. Open your browser and navigate to `http://localhost:5173`
 
+## Features
+
+### 🧮 Tax Calculators
+- **Compensation Income Tax Calculator**: Calculate monthly and annual income tax with SSS, PhilHealth, and Pag-IBIG contributions
+- **VAT Calculator**: Calculate 12% VAT for both inclusive and exclusive amounts
+
+### 📋 Tax Directory Sections
+- **Taxpayer Categories**: Understanding different taxpayer types and their obligations
+- **Forms Library**: Access to BIR forms and filing guides
+- **Filing Calendar**: Tax deadlines and important reminders
+- **Tax Rates & Tables**: Current tax rates and brackets
+- **FAQs**: Frequently asked questions about Philippine taxation
+
 ## Available Scripts
 
 - `npm run dev` - Start development server with hot reload
@@ -46,7 +59,7 @@ A comprehensive tax calculator for the Philippines.
 
 ## Disclaimer
 
-This calculator uses current BIR tax rates and regulations. Actual tax calculations may vary based on specific circumstances, available deductions, exemptions, or policy changes. Please consult with a tax professional or the [Bureau of Internal Revenue (BIR)](https://www.bir.gov.ph/) for official tax computations.
+This tax directory provides information based on current BIR tax rates, regulations, and forms. Tax calculations, deadlines, and requirements may vary based on specific circumstances, available deductions, exemptions, or policy changes. Please consult with a tax professional or the [Bureau of Internal Revenue (BIR)](https://www.bir.gov.ph/) for official guidance and the most up-to-date information.
 
 ## License
 

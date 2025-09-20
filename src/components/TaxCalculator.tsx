@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { Calculator, Info } from 'lucide-react';
 import { TaxType } from '../types/tax';
+import { DirectorySection } from '../types/directory';
+import Navigation from './Navigation';
 import TaxTypeSelector from './TaxTypeSelector';
 import CompensationTaxCalculator from './CompensationTaxCalculator';
 import VATCalculator from './VATCalculator';
+import TaxpayerCategories from './TaxpayerCategories';
+import FormsLibrary from './FormsLibrary';
+import FilingCalendar from './FilingCalendar';
+import TaxRates from './TaxRates';
+import FAQs from './FAQs';
 
 const TaxCalculator: React.FC = () => {
+  const [activeSection, setActiveSection] = useState<DirectorySection>('calculators');
   const [selectedTaxType, setSelectedTaxType] = useState<TaxType>('compensation');
 
   const renderCalculator = () => {
@@ -19,6 +27,35 @@ const TaxCalculator: React.FC = () => {
     }
   };
 
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'calculators':
+        return (
+          <>
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            {renderCalculator()}
+          </>
+        );
+      case 'taxpayer-categories':
+        return <TaxpayerCategories />;
+      case 'forms-library':
+        return <FormsLibrary />;
+      case 'filing-calendar':
+        return <FilingCalendar />;
+      case 'tax-rates':
+        return <TaxRates />;
+      case 'faqs':
+        return <FAQs />;
+      default:
+        return (
+          <>
+            <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+            {renderCalculator()}
+          </>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -28,19 +65,19 @@ const TaxCalculator: React.FC = () => {
             <Calculator className="w-8 h-8" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Philippines Tax Calculator
+            Philippines Tax Directory
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Comprehensive tax calculator for different types of taxes in the Philippines
-            based on current BIR rates and regulations.
+            Your comprehensive guide to Philippine taxation - calculators, forms, deadlines, and resources
+            for individuals, businesses, and organizations.
           </p>
         </div>
 
-        {/* Tax Type Selector */}
-        <TaxTypeSelector selectedType={selectedTaxType} onTypeChange={setSelectedTaxType} />
+        {/* Navigation */}
+        <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
 
-        {/* Dynamic Calculator */}
-        {renderCalculator()}
+        {/* Dynamic Content */}
+        {renderContent()}
 
         {/* Disclaimer */}
         <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-xl p-6">

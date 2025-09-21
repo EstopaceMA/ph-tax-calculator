@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FileText, Download, Search, Filter, Calendar, Users, Building, Receipt, Clock } from 'lucide-react';
-import { BIRForm } from '../types/directory';
-import { BIR_FORMS } from '../data/birForms';
+import { BIRForm } from '@/types/directory';
+import { BIR_FORMS } from '@/data/birForms';
 
 const FormsLibrary: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -1,17 +1,17 @@
 import React from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Calculator, Info } from 'lucide-react';
-import { TaxType } from '../types/tax';
-import { DirectorySection } from '../types/directory';
-import Navigation from './Navigation';
-import TaxTypeSelector from './TaxTypeSelector';
-import CompensationTaxCalculator from './CompensationTaxCalculator';
-import VATCalculator from './VATCalculator';
-import TaxpayerCategories from './TaxpayerCategories';
-import FormsLibrary from './FormsLibrary';
-import FilingCalendar from './FilingCalendar';
-import TaxRates from './TaxRates';
-import FAQs from './FAQs';
+import { TaxType } from '@/types/tax';
+import { DirectorySection } from '@/types/directory';
+import Navigation from '@/components/Navigation';
+import TaxTypeSelector from '@/components/TaxTypeSelector';
+import CompensationTaxCalculator from '@/components/CompensationTaxCalculator';
+import VATCalculator from '@/components/VATCalculator';
+import TaxpayerCategories from '@/components/TaxpayerCategories';
+import FormsLibrary from '@/components/FormsLibrary';
+import FilingCalendar from '@/components/FilingCalendar';
+import TaxRates from '@/components/TaxRates';
+import FAQs from '@/components/FAQs';
 
 const TaxDirectory: React.FC = () => {
   const location = useLocation();

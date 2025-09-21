@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DollarSign, TrendingUp, Info, Calendar } from 'lucide-react';
-import { TAX_RATES } from '../data/taxRates';
+import { TAX_RATES } from '@/data/taxRates';
 
 const TaxRates: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');

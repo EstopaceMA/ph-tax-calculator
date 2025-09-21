@@ -1,5 +1,5 @@
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import TaxDirectory from './components/TaxDirectory';
+import TaxDirectory from '@/components/TaxDirectory';
 
 function App() {
   return (

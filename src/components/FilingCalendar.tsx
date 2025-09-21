@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, AlertTriangle, CheckCircle, Users, Building, Receipt } from 'lucide-react';
+import { cn } from '../utils/cn';
 
 interface TaxDeadline {
   id: string;
@@ -155,12 +156,12 @@ const FilingCalendar: React.FC = () => {
     return matchesFrequency && matchesCategory;
   });
 
-  const getPriorityColor = (priority: string) => {
+  const getPriorityClasses = (priority: string) => {
     switch (priority) {
-      case 'high': return 'red';
-      case 'medium': return 'yellow';
-      case 'low': return 'green';
-      default: return 'gray';
+      case 'high': return 'bg-red-100 text-red-800';
+      case 'medium': return 'bg-yellow-100 text-yellow-800';
+      case 'low': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -173,12 +174,12 @@ const FilingCalendar: React.FC = () => {
     }
   };
 
-  const getFrequencyColor = (frequency: string) => {
+  const getFrequencyClasses = (frequency: string) => {
     switch (frequency) {
-      case 'monthly': return 'blue';
-      case 'quarterly': return 'green';
-      case 'annually': return 'purple';
-      default: return 'gray';
+      case 'monthly': return 'bg-blue-100 text-blue-800';
+      case 'quarterly': return 'bg-green-100 text-green-800';
+      case 'annually': return 'bg-purple-100 text-purple-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -229,19 +230,19 @@ const FilingCalendar: React.FC = () => {
       <div className="grid gap-4">
         {filteredDeadlines.map((deadline) => {
           const PriorityIcon = getPriorityIcon(deadline.priority);
-          const priorityColor = getPriorityColor(deadline.priority);
-          const frequencyColor = getFrequencyColor(deadline.frequency);
+          const priorityClasses = getPriorityClasses(deadline.priority);
+          const frequencyClasses = getFrequencyClasses(deadline.frequency);
 
           return (
             <div key={deadline.id} className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${frequencyColor}-100 text-${frequencyColor}-800`}>
+                    <div className={cn("flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium", frequencyClasses)}>
                       <Calendar className="w-3 h-3" />
                       {deadline.frequency}
                     </div>
-                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-${priorityColor}-100 text-${priorityColor}-800`}>
+                    <div className={cn("flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium", priorityClasses)}>
                       <PriorityIcon className="w-3 h-3" />
                       {deadline.priority} priority
                     </div>

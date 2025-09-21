@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Calculator, Users, FileText, Calendar, DollarSign, HelpCircle, Menu, X } from 'lucide-react';
 import { DirectorySection } from '../types/directory';
+import { cn } from '../utils/cn';
 
 const navigationItems: { id: DirectorySection; name: string; path: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
   {
@@ -77,10 +78,12 @@ const Navigation: React.FC = () => {
   return (
     <>
       {/* Modern Sticky Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50'
-        : 'bg-white/80 backdrop-blur-sm shadow-lg'
-        }`}>
+      <nav className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled
+          ? "bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-200/50"
+          : "bg-white/80 backdrop-blur-sm shadow-lg"
+      )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center justify-between h-16">
@@ -104,10 +107,12 @@ const Navigation: React.FC = () => {
                   <Link
                     key={item.id}
                     to={item.path}
-                    className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium group ${isActive
-                      ? 'text-blue-600 bg-blue-50/80'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50/50'
-                      }`}
+                    className={cn(
+                      "relative flex items-center gap-1.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium group",
+                      isActive
+                        ? "text-blue-600 bg-blue-50/80"
+                        : "text-gray-600 hover:text-blue-600 hover:bg-blue-50/50"
+                    )}
                     title={item.description}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
@@ -159,10 +164,12 @@ const Navigation: React.FC = () => {
                     key={item.id}
                     to={item.path}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${isActive
-                      ? 'bg-blue-50 text-blue-600 shadow-sm'
-                      : 'text-gray-700 hover:bg-gray-50/80'
-                      }`}
+                    className={cn(
+                      "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200",
+                      isActive
+                        ? "bg-blue-50 text-blue-600 shadow-sm"
+                        : "text-gray-700 hover:bg-gray-50/80"
+                    )}
                   >
                     <Icon className="w-5 h-5" />
                     <div>

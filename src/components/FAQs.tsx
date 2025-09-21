@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HelpCircle, Search, ChevronDown, ChevronUp, Globe, FileText } from 'lucide-react';
 import { FAQS } from '../data/faqs';
+import { Button, Badge, Card, CardHeader, CardTitle, CardDescription } from './ui';
 
 const FAQs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,16 +38,16 @@ const FAQs: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-        <div className="flex items-center gap-3 mb-4">
+      <Card>
+        <CardHeader>
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
             <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
-            <p className="text-sm sm:text-base text-gray-600">Common tax questions answered in plain language</p>
+            <CardTitle className="text-xl sm:text-2xl font-bold">Frequently Asked Questions</CardTitle>
+            <CardDescription>Common tax questions answered in plain language</CardDescription>
           </div>
-        </div>
+        </CardHeader>
 
         {/* Language Toggle */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
@@ -55,26 +56,24 @@ const FAQs: React.FC = () => {
             <span className="text-sm sm:text-base font-medium text-gray-700">Language:</span>
           </div>
           <div className="flex bg-gray-100 rounded-lg p-1">
-            <button
+            <Button
+              variant="toggle"
+              size="sm"
+              active={language === 'en'}
               onClick={() => setLanguage('en')}
-              className={`px-3 py-1.5 sm:py-1 rounded-md text-sm font-medium transition-colors ${
-                language === 'en'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              className="px-3 py-1.5 sm:py-1 rounded-md"
             >
               English
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="toggle"
+              size="sm"
+              active={language === 'fil'}
               onClick={() => setLanguage('fil')}
-              className={`px-3 py-1.5 sm:py-1 rounded-md text-sm font-medium transition-colors ${
-                language === 'fil'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+              className="px-3 py-1.5 sm:py-1 rounded-md"
             >
               Filipino
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -102,7 +101,7 @@ const FAQs: React.FC = () => {
             ))}
           </select>
         </div>
-      </div>
+      </Card>
 
       {/* FAQs */}
       <div className="space-y-4">
@@ -112,7 +111,7 @@ const FAQs: React.FC = () => {
           const answer = language === 'fil' && faq.answerFil ? faq.answerFil : faq.answer;
 
           return (
-            <div key={faq.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <Card key={faq.id} padding="none" className="overflow-hidden">
               {/* Question */}
               <button
                 onClick={() => toggleFAQ(faq.id)}
@@ -125,12 +124,9 @@ const FAQs: React.FC = () => {
                     </h3>
                     <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                       {faq.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs sm:text-xs"
-                        >
+                        <Badge key={index} variant="gray" size="sm">
                           {tag}
-                        </span>
+                        </Badge>
                       ))}
                     </div>
                   </div>
@@ -159,12 +155,9 @@ const FAQs: React.FC = () => {
                         </h4>
                         <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {faq.relatedForms.map((form, index) => (
-                            <span
-                              key={index}
-                              className="bg-blue-100 text-blue-800 px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
-                            >
+                            <Badge key={index} variant="blue" size="sm">
                               BIR Form {form}
-                            </span>
+                            </Badge>
                           ))}
                         </div>
                       </div>
@@ -187,17 +180,17 @@ const FAQs: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div>
+            </Card>
           );
         })}
       </div>
 
       {filteredFAQs.length === 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-8 sm:p-12 text-center">
+        <Card padding="lg" className="text-center">
           <HelpCircle className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
           <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No questions found</h3>
           <p className="text-sm sm:text-base text-gray-600">Try adjusting your search or filter criteria.</p>
-        </div>
+        </Card>
       )}
 
       {/* Additional Help */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TaxType, TAX_TYPES } from '../types/tax';
 import { Calculator, User, FileText } from 'lucide-react';
+import { Card, Badge } from './ui';
 
 interface TaxTypeSelectorProps {
   selectedType: TaxType;
@@ -20,7 +21,7 @@ const getIcon = (type: TaxType) => {
 
 const TaxTypeSelector: React.FC<TaxTypeSelectorProps> = ({ selectedType, onTypeChange }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
+    <Card className="mb-4 sm:mb-6">
       <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Select Tax Type</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {TAX_TYPES.map((taxType) => (
@@ -48,12 +49,9 @@ const TaxTypeSelector: React.FC<TaxTypeSelectorProps> = ({ selectedType, onTypeC
                 </p>
                 {taxType.rate && (
                   <div className="mt-2">
-                    <span className={`text-xs font-medium px-2 py-1 rounded ${selectedType === taxType.id
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-gray-100 text-gray-700'
-                      }`}>
+                    <Badge variant={selectedType === taxType.id ? 'blue' : 'gray'} size="sm">
                       {taxType.rate}
-                    </span>
+                    </Badge>
                   </div>
                 )}
               </div>
@@ -61,7 +59,7 @@ const TaxTypeSelector: React.FC<TaxTypeSelectorProps> = ({ selectedType, onTypeC
           </button>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 

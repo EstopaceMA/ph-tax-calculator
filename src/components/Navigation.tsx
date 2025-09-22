@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Calculator, Users, FileText, Calendar, DollarSign, HelpCircle, Menu, X } from 'lucide-react';
-import { DirectorySection } from '../types/directory';
-import { cn } from '../utils/cn';
+import { DirectorySection } from '@/types/directory';
+import { cn } from '@/utils/cn';
 
 const navigationItems: { id: DirectorySection; name: string; path: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
   {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, FileText, TrendingDown, TrendingUp } from 'lucide-react';
-import { calculateTax } from '../utils/taxCalculator';
-import { TaxCalculation } from '../types/tax';
+import { calculateTax } from '@/utils/taxCalculator';
+import { TaxCalculation } from '@/types/tax';
 
 const CompensationTaxCalculator: React.FC = () => {
   const [salary, setSalary] = useState<string>('');

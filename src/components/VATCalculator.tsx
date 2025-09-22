@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, Calculator } from 'lucide-react';
-import { calculateVAT } from '../utils/taxCalculator';
+import { calculateVAT } from '@/utils/taxCalculator';
 
 interface VATCalculation {
   vatAmount: number;

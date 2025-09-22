@@ -1,7 +1,7 @@
 import React from 'react';
-import { TaxType, TAX_TYPES } from '../types/tax';
+import { TaxType, TAX_TYPES } from '@/types/tax';
 import { Calculator, User, FileText } from 'lucide-react';
-import { Card, Badge } from './ui';
+import { Card, Badge } from '@/components/ui';
 
 interface TaxTypeSelectorProps {
   selectedType: TaxType;

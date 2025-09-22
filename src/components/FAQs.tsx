@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HelpCircle, Search, ChevronDown, ChevronUp, Globe, FileText } from 'lucide-react';
-import { FAQS } from '../data/faqs';
-import { Button, Badge, Card, CardHeader, CardTitle, CardDescription } from './ui';
+import { FAQS } from '@/data/faqs';
+import { Button, Badge, Card, CardHeader, CardTitle, CardDescription } from '@/components/ui';
 
 const FAQs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -1,13 +1,13 @@
 import { TaxBracket, ContributionRates, TaxCalculation } from '../types/tax';
 
-// 2025 Philippines Tax Brackets (BIR)
+// 2025 TRAIN Tax Brackets
 export const TAX_BRACKETS: TaxBracket[] = [
-  { min: 0, max: 250000, rate: 0, baseAmount: 0 },
-  { min: 250000, max: 400000, rate: 0.20, baseAmount: 0 },
-  { min: 400000, max: 800000, rate: 0.25, baseAmount: 30000 },
-  { min: 800000, max: 2000000, rate: 0.30, baseAmount: 130000 },
-  { min: 2000000, max: 8000000, rate: 0.32, baseAmount: 490000 },
-  { min: 8000000, max: Infinity, rate: 0.35, baseAmount: 2410000 }
+  { min: 0, max: 250000, rate: 0.00, baseAmount: 0 },
+  { min: 250000, max: 400000, rate: 0.15, baseAmount: 0 },
+  { min: 400000, max: 800000, rate: 0.20, baseAmount: 22500 },
+  { min: 800000, max: 2000000, rate: 0.25, baseAmount: 102500 },
+  { min: 2000000, max: 8000000, rate: 0.30, baseAmount: 402500 },
+  { min: 8000000, max: Infinity, rate: 0.35, baseAmount: 2202500 }
 ];
 
 // 2025 Contribution Rates
@@ -27,7 +27,7 @@ export const CONTRIBUTION_RATES: ContributionRates = {
     lowRate: 0.01, // 1%
     highRate: 0.02, // 2%
     threshold: 1500,
-    maxContribution: 300
+    maxContribution: 200
   }
 };
 
@@ -37,8 +37,10 @@ export function calculateSSS(monthlySalary: number): number {
 }
 
 export function calculatePhilHealth(monthlySalary: number): number {
-  const premium = monthlySalary * (CONTRIBUTION_RATES.philHealth.rate / 2); // Employee portion only
-  return Math.min(Math.max(premium, CONTRIBUTION_RATES.philHealth.minPremium / 2), CONTRIBUTION_RATES.philHealth.maxPremium / 2);
+  const incomeCeiling = 100000; // DOH/BIR-mandated ceiling
+  const cappedSalary = Math.min(monthlySalary, incomeCeiling);
+  const employeeShare = (CONTRIBUTION_RATES.philHealth.rate / 2);
+  return cappedSalary * employeeShare;
 }
 
 export function calculatePagibig(monthlySalary: number): number {

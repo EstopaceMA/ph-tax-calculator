@@ -5,6 +5,14 @@ export interface TaxBracket {
   baseAmount: number;
 }
 
+export interface SSSBracket {
+  rangeOfCompensation: { min: number; max: number };
+  monthlySalaryCredit: { regularSS: number; mpf: number; total: number };
+  employerAmountOfContribution: { regularSS: number; mpf: number; ec: number; total: number };
+  employeeAmountOfContribution: { regularSS: number; mpf: number; total: number };
+  totalContribution: number;
+}
+
 export interface ContributionRates {
   sss: {
     employeeRate: number;

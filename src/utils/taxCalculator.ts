@@ -1,39 +1,15 @@
-import { TaxBracket, ContributionRates, TaxCalculation } from '../types/tax';
-
-// 2025 TRAIN Tax Brackets
-export const TAX_BRACKETS: TaxBracket[] = [
-  { min: 0, max: 250000, rate: 0.00, baseAmount: 0 },
-  { min: 250000, max: 400000, rate: 0.15, baseAmount: 0 },
-  { min: 400000, max: 800000, rate: 0.20, baseAmount: 22500 },
-  { min: 800000, max: 2000000, rate: 0.25, baseAmount: 102500 },
-  { min: 2000000, max: 8000000, rate: 0.30, baseAmount: 402500 },
-  { min: 8000000, max: Infinity, rate: 0.35, baseAmount: 2202500 }
-];
-
-// 2025 Contribution Rates
-export const CONTRIBUTION_RATES: ContributionRates = {
-  sss: {
-    employeeRate: 0.05, // 5.0%
-    employerRate: 0.095, // 9.5%
-    minSalary: 4000,
-    maxSalary: 35000
-  },
-  philHealth: {
-    rate: 0.05, // 5% (2.5% employee + 2.5% employer)
-    minPremium: 550,
-    maxPremium: 5500
-  },
-  pagibig: {
-    lowRate: 0.01, // 1%
-    highRate: 0.02, // 2%
-    threshold: 1500,
-    maxContribution: 200
-  }
-};
+import { TaxCalculation } from '../types/tax';
+import { TAX_BRACKETS, SSS_BRACKETS, CONTRIBUTION_RATES, VAT_RATE, } from '../data/taxRules';
 
 export function calculateSSS(monthlySalary: number): number {
-  const salaryForSSS = Math.min(Math.max(monthlySalary, CONTRIBUTION_RATES.sss.minSalary), CONTRIBUTION_RATES.sss.maxSalary);
-  return salaryForSSS * CONTRIBUTION_RATES.sss.employeeRate;
+  const bracket = SSS_BRACKETS.find(bracket =>
+    monthlySalary >= bracket.rangeOfCompensation.min &&
+    monthlySalary <= bracket.rangeOfCompensation.max
+  );
+
+  // Return found bracket or fallback to highest bracket
+  return bracket?.employeeAmountOfContribution.total ??
+    SSS_BRACKETS[SSS_BRACKETS.length - 1].employeeAmountOfContribution.total;
 }
 
 export function calculatePhilHealth(monthlySalary: number): number {
@@ -108,11 +84,8 @@ export function calculateTax(monthlySalary: number): TaxCalculation {
 }
 
 export function calculateVAT(amount: number, isVATInclusive: boolean = false): { vatAmount: number; netAmount: number; grossAmount: number } {
-  const vatRate = 0.12; // 12% VAT
-
   if (isVATInclusive) {
-    // Amount already includes VAT
-    const netAmount = amount / (1 + vatRate);
+    const netAmount = amount / (1 + VAT_RATE);
     const vatAmount = amount - netAmount;
     return {
       vatAmount,
@@ -120,8 +93,7 @@ export function calculateVAT(amount: number, isVATInclusive: boolean = false): {
       grossAmount: amount
     };
   } else {
-    // Amount is VAT-exclusive
-    const vatAmount = amount * vatRate;
+    const vatAmount = amount * VAT_RATE;
     const grossAmount = amount + vatAmount;
     return {
       vatAmount,

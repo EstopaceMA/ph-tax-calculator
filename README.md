@@ -4,30 +4,81 @@ A comprehensive tax directory and calculator for the Philippines, featuring mode
 
 ## Getting Started
 
-### Prerequisites
+You can run this application in two ways: using Docker (recommended for beginners) or traditional Node.js setup.
 
-- Node.js (version 16 or higher)
-- npm or yarn
+### 🐳 Option 1: Docker Setup (Recommended)
 
-### Installation
+#### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (includes Docker Compose)
+- Git
 
-1. Clone the repository:
+#### Quick Start with Docker
+1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd ph-tax-calculator
+   cd ph-tax-directory
    ```
 
-2. Install dependencies:
+2. **Copy environment file:**
+   ```bash
+   copy .env.example .env
+   ```
+   *On Mac/Linux, use `cp .env.example .env`*
+
+3. **Start the application:**
+   ```bash
+   cd docker
+   docker-compose up --build
+   ```
+
+4. **Access the application:**
+   - **Main app**: http://localhost:5173
+   - **With Nginx**: http://localhost:80 (if nginx service is enabled)
+
+#### Docker Management Commands
+- **Stop the application:** `docker-compose down`
+- **View logs:** `docker-compose logs -f app`
+- **Rebuild after changes:** `docker-compose up --build`
+- **Run in background:** `docker-compose up -d`
+
+#### Docker Services
+- **app**: Main React application running on Vite dev server
+- **nginx**: Reverse proxy for production-like setup (optional)
+
+### 🔧 Option 2: Traditional Node.js Setup
+
+#### Prerequisites
+- Node.js (version 18 or higher)
+- npm or yarn
+
+#### Installation
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd ph-tax-directory
+   ```
+
+2. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. Start the development server:
+3. **Start the development server:**
    ```bash
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. **Open your browser and navigate to** `http://localhost:5173`
+
+### 🎯 For Beginners
+
+If you're new to development, Docker is the easiest way to get started:
+
+1. **Download Docker Desktop** from https://www.docker.com/products/docker-desktop/
+2. **Install and start Docker Desktop**
+3. **Follow the Docker Setup steps above** - that's it!
+
+No need to install Node.js, manage versions, or worry about dependencies. Docker handles everything for you!
 
 ## Features
 
@@ -44,10 +95,36 @@ A comprehensive tax directory and calculator for the Philippines, featuring mode
 
 ## Available Scripts
 
+### Docker Commands
+- `docker-compose up --build` - Start application with Docker (from `/docker` folder)
+- `docker-compose down` - Stop all containers
+- `docker-compose logs -f app` - View application logs
+- `docker-compose exec app npm install <package>` - Install new packages
+
+### Node.js Commands (Traditional Setup)
 - `npm run dev` - Start development server with hot reload
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint to check code quality
 - `npm run preview` - Preview production build locally
+
+## 🔧 Troubleshooting
+
+### Docker Issues
+- **"docker-compose not found"**: Make sure Docker Desktop is installed and running
+- **Port already in use**: Change ports in `.env` file (APP_PORT, NGINX_PORT)
+- **Permission errors**: On Linux/Mac, you might need `sudo` for Docker commands
+- **Hot reload not working**: Make sure you're mounting the source code correctly (check docker-compose.yml)
+
+### General Issues
+- **Cannot access localhost**: Try http://127.0.0.1:5173 instead
+- **Styles not loading**: Clear browser cache and restart the container
+- **Build fails**: Delete `node_modules` and rebuild: `docker-compose down && docker-compose up --build`
+
+### Getting Help
+1. Check Docker Desktop is running
+2. Ensure no other applications are using ports 5173 or 80
+3. Try rebuilding: `docker-compose up --build`
+4. Check logs: `docker-compose logs -f`
 
 ## Contributing
 

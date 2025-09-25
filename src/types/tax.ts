@@ -48,9 +48,50 @@ export interface TaxCalculation {
   taxBracket: string;
 }
 
+export interface TariffItem {
+  ahtn: string;
+  description: string;
+  rate: number;
+}
+
+export interface CustomsCalculation {
+  goods: {
+    ahtnCode: string;
+    description: string;
+    rateOfDuty: number;
+  };
+  dutiableValue: {
+    fobFcaValue: number;
+    freight: number;
+    insurance: number;
+    totalDutiableValueForeign: number;
+    exchangeRate: number;
+    totalDutiableValuePHP: number;
+  };
+  charges: {
+    customsDuty: number;
+    exciseTax: number;
+    brokerageFee: number;
+    importProcessingCharge: number;
+    birDocumentaryStampTax: number;
+    customsDocumentaryStamp: number;
+    totalLandedCost: number;
+  };
+  summary: {
+    customsDuty: number;
+    vat: number;
+    exciseTax: number;
+    importProcessingCharge: number;
+    birDocumentaryStampTax: number;
+    customsDocumentaryStamp: number;
+    totalTaxAmount: number;
+  };
+}
+
 export type TaxType =
   | 'compensation'
-  | 'vat';
+  | 'vat'
+  | 'customs';
 
 export interface TaxTypeInfo {
   id: TaxType;
@@ -74,5 +115,12 @@ export const TAX_TYPES: TaxTypeInfo[] = [
     description: 'Tax on sale of goods and services',
     rate: '12%',
     applicableTo: 'VAT-registered businesses'
+  },
+  {
+    id: 'customs',
+    name: 'Customs Duty & Import Tax (Beta)',
+    description: 'BOC Tax Estimator for imported goods via express couriers',
+    rate: 'Variable',
+    applicableTo: 'Importers and express shipments'
   }
 ];

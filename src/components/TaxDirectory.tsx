@@ -7,6 +7,7 @@ import Navigation from '@/components/Navigation';
 import TaxTypeSelector from '@/components/TaxTypeSelector';
 import CompensationTaxCalculator from '@/components/CompensationTaxCalculator';
 import VATCalculator from '@/components/VATCalculator';
+import CustomsDutyCalculator from '@/components/CustomsDutyCalculator';
 import TaxpayerCategories from '@/components/TaxpayerCategories';
 import FormsLibrary from '@/components/FormsLibrary';
 import FilingCalendar from '@/components/FilingCalendar';
@@ -29,7 +30,7 @@ const TaxDirectory: React.FC = () => {
 
   // Determine current tax type from URL parameter or default
   const getCurrentTaxType = (): TaxType => {
-    if (taxType && ['compensation', 'vat'].includes(taxType as TaxType)) {
+    if (taxType && ['compensation', 'vat', 'customs'].includes(taxType as TaxType)) {
       return taxType as TaxType;
     }
     return 'compensation';
@@ -49,6 +50,8 @@ const TaxDirectory: React.FC = () => {
         return <CompensationTaxCalculator />;
       case 'vat':
         return <VATCalculator />;
+      case 'customs':
+        return <CustomsDutyCalculator />;
       default:
         return <CompensationTaxCalculator />;
     }

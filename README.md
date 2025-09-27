@@ -59,7 +59,7 @@ A comprehensive tax directory and calculator for the Philippines, featuring mode
 
 ## Disclaimer
 
-This tax directory provides information based on current BIR tax rates, regulations, and forms. Tax calculations, deadlines, and requirements may vary based on specific circumstances, available deductions, exemptions, or policy changes. Please consult with a tax professional or the [Bureau of Internal Revenue (BIR)](https://www.bir.gov.ph/) for official guidance and the most up-to-date information.
+This platform is intended for general informational and educational purposes only. It does not provide official tax, legal, or financial advice and should not be relied upon as a substitute for guidance from the Bureau of Internal Revenue (BIR) or a licensed professional. For advice specific to your situation, please consult the appropriate government agency or a qualified tax advisor.
 
 ## License
 

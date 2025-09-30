@@ -139,8 +139,6 @@ export function calculateCustomsDuty(params: {
   // Calculate excise tax (if applicable)
   const exciseTax = exciseTaxRate > 0 ? totalDutiableValuePHP * (exciseTaxRate / 100) : 0;
 
-  // Use the provided brokerage fee
-
   // Fixed charges based on BOC tax estimator
   const importProcessingCharge = 250;
   const birDocumentaryStampTax = 30;

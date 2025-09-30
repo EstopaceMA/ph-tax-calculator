@@ -14,14 +14,14 @@ const CustomsDutyCalculator: React.FC = () => {
   const [freight, setFreight] = useState<string>('');
   const [exchangeRate, setExchangeRate] = useState<string>('');
   const [isDangerousCargo, setIsDangerousCargo] = useState<boolean>(false);
-  const [courierType, setCourierType] = useState<string>('dhl');
+  const [brokerageFee, setBrokerageFee] = useState<string>('700');
   const [exciseTaxRate, setExciseTaxRate] = useState<string>('0');
 
   const [calculation, setCalculation] = useState<CustomsCalculation | null>(null);
 
   // Filter tariff items based on search query
   useEffect(() => {
-    if (searchQuery.trim()) {
+    if (searchQuery.trim() && !selectedTariff) {
       const filtered = STATIC_TARIFF_DATA.filter(item =>
         item.description.toLowerCase().includes(searchQuery.toLowerCase())
       ).slice(0, 10); // Limit to first 10 results
@@ -29,7 +29,7 @@ const CustomsDutyCalculator: React.FC = () => {
     } else {
       setFilteredItems([]);
     }
-  }, [searchQuery]);
+  }, [searchQuery, selectedTariff]);
 
   // Select tariff item
   const handleSelectTariff = (item: TariffItem) => {
@@ -45,6 +45,7 @@ const CustomsDutyCalculator: React.FC = () => {
     const rate = parseFloat(exchangeRate) || 0;
     const dutyRate = selectedTariff?.rate || 0;
     const exciseRate = parseFloat(exciseTaxRate) || 0;
+    const brokerageFeeValue = parseFloat(brokerageFee) || 0;
 
     if (fobValue > 0 && rate > 0) {
       const result = calculateCustomsDuty({
@@ -53,7 +54,7 @@ const CustomsDutyCalculator: React.FC = () => {
         exchangeRate: rate,
         rateOfDuty: dutyRate,
         isDangerousCargo,
-        courierType,
+        brokerageFee: brokerageFeeValue,
         exciseTaxRate: exciseRate
       });
 
@@ -65,7 +66,7 @@ const CustomsDutyCalculator: React.FC = () => {
     } else {
       setCalculation(null);
     }
-  }, [fobFcaValue, freight, exchangeRate, selectedTariff, isDangerousCargo, courierType, exciseTaxRate]);
+  }, [fobFcaValue, freight, exchangeRate, selectedTariff, isDangerousCargo, brokerageFee, exciseTaxRate]);
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-PH', {
@@ -118,7 +119,12 @@ const CustomsDutyCalculator: React.FC = () => {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  if (selectedTariff) {
+                    setSelectedTariff(null);
+                  }
+                }}
                 placeholder="Type to search product description..."
                 className="w-full pl-4 pr-10 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               />
@@ -241,18 +247,18 @@ const CustomsDutyCalculator: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Courier Type
+                Brokerage Fee
               </label>
-              <select
-                value={courierType}
-                onChange={(e) => setCourierType(e.target.value)}
-                className="w-full py-2 sm:py-3 px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-              >
-                <option value="dhl">DHL (₱700 brokerage fee)</option>
-                <option value="fedex">FedEx (₱700 brokerage fee)</option>
-                <option value="ups">UPS (₱700 brokerage fee)</option>
-                <option value="other">Other (no brokerage fee)</option>
-              </select>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₱</span>
+                <input
+                  type="text"
+                  value={brokerageFee}
+                  onChange={(e) => setBrokerageFee(e.target.value.replace(/[^0-9.]/g, ''))}
+                  placeholder="700.00"
+                  className="w-full pl-8 pr-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                />
+              </div>
             </div>
 
             <div>
@@ -389,6 +395,27 @@ const CustomsDutyCalculator: React.FC = () => {
           </div>
         </>
       )}
+
+      {/* Calculation Formulas */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4">
+        <div className="flex items-start gap-3">
+          <Calculator className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div>
+            <h4 className="font-medium text-blue-800 mb-2 text-sm sm:text-base">Calculation Formulas</h4>
+            <div className="text-xs sm:text-sm text-blue-700 leading-relaxed space-y-2">
+              <div>
+                <strong>Customs Duty</strong> = Total Dutiable Value in PHP × Rate of Duty
+              </div>
+              <div>
+                <strong>Total Landed Cost</strong> = Total Dutiable Value in PHP + Customs Duty + Excise Tax (If Applicable) + Brokerage Fee + Import Processing Charge + Customs Documentary Stamp + BIR Documentary Stamp Tax
+              </div>
+              <div>
+                <strong>VAT</strong> = 12% of Total Landed Cost
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 sm:p-4">

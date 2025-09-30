@@ -110,7 +110,7 @@ export function calculateCustomsDuty(params: {
   exchangeRate: number;
   rateOfDuty: number;
   isDangerousCargo?: boolean;
-  courierType?: string;
+  brokerageFee?: number;
   exciseTaxRate?: number;
 }): CustomsCalculation {
   const {
@@ -119,7 +119,7 @@ export function calculateCustomsDuty(params: {
     exchangeRate,
     rateOfDuty,
     isDangerousCargo = false,
-    courierType = '',
+    brokerageFee = 0,
     exciseTaxRate = 0
   } = params;
 
@@ -139,9 +139,7 @@ export function calculateCustomsDuty(params: {
   // Calculate excise tax (if applicable)
   const exciseTax = exciseTaxRate > 0 ? totalDutiableValuePHP * (exciseTaxRate / 100) : 0;
 
-  // Brokerage fee (₱700 for express couriers)
-  const isExpressCourier = ['dhl', 'fedex', 'ups'].includes(courierType.toLowerCase());
-  const brokerageFee = isExpressCourier ? 700 : 0;
+  // Use the provided brokerage fee
 
   // Fixed charges based on BOC tax estimator
   const importProcessingCharge = 250;

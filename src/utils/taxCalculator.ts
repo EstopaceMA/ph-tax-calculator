@@ -1,4 +1,4 @@
-import { TaxCalculation } from '../types/tax';
+import { TaxCalculation, CustomsCalculation } from '../types/tax';
 import { TAX_BRACKETS, SSS_BRACKETS, CONTRIBUTION_RATES, VAT_RATE, } from '../data/taxRules';
 
 export function calculateSSS(monthlySalary: number): number {
@@ -101,4 +101,92 @@ export function calculateVAT(amount: number, isVATInclusive: boolean = false): {
       grossAmount
     };
   }
+}
+
+
+export function calculateCustomsDuty(params: {
+  fobFcaValue: number;
+  freight: number;
+  exchangeRate: number;
+  rateOfDuty: number;
+  isDangerousCargo?: boolean;
+  brokerageFee?: number;
+  exciseTaxRate?: number;
+}): CustomsCalculation {
+  const {
+    fobFcaValue,
+    freight,
+    exchangeRate,
+    rateOfDuty,
+    isDangerousCargo = false,
+    brokerageFee = 0,
+    exciseTaxRate = 0
+  } = params;
+
+  // Calculate insurance (2% for general cargo, 4% for dangerous cargo)
+  const insuranceRate = isDangerousCargo ? 0.04 : 0.02;
+  const insurance = fobFcaValue * insuranceRate;
+
+  // Calculate total dutiable value in foreign currency
+  const totalDutiableValueForeign = fobFcaValue + freight + insurance;
+
+  // Convert to PHP
+  const totalDutiableValuePHP = totalDutiableValueForeign * exchangeRate;
+
+  // Calculate customs duty
+  const customsDuty = totalDutiableValuePHP * (rateOfDuty / 100);
+
+  // Calculate excise tax (if applicable)
+  const exciseTax = exciseTaxRate > 0 ? totalDutiableValuePHP * (exciseTaxRate / 100) : 0;
+
+  // Fixed charges based on BOC tax estimator
+  const importProcessingCharge = 250;
+  const birDocumentaryStampTax = 30;
+  const customsDocumentaryStamp = 100;
+
+  // Calculate total landed cost
+  const totalLandedCost = totalDutiableValuePHP + customsDuty + exciseTax +
+    brokerageFee + importProcessingCharge +
+    birDocumentaryStampTax + customsDocumentaryStamp;
+
+  // Calculate VAT (12% of total landed cost)
+  const vat = totalLandedCost * VAT_RATE;
+
+  // Calculate total tax amount
+  const totalTaxAmount = customsDuty + vat + exciseTax + importProcessingCharge +
+    birDocumentaryStampTax + customsDocumentaryStamp;
+
+  return {
+    goods: {
+      ahtnCode: '',
+      description: '',
+      rateOfDuty
+    },
+    dutiableValue: {
+      fobFcaValue,
+      freight,
+      insurance,
+      totalDutiableValueForeign,
+      exchangeRate,
+      totalDutiableValuePHP
+    },
+    charges: {
+      customsDuty,
+      exciseTax,
+      brokerageFee,
+      importProcessingCharge,
+      birDocumentaryStampTax,
+      customsDocumentaryStamp,
+      totalLandedCost
+    },
+    summary: {
+      customsDuty,
+      vat,
+      exciseTax,
+      importProcessingCharge,
+      birDocumentaryStampTax,
+      customsDocumentaryStamp,
+      totalTaxAmount
+    }
+  };
 }

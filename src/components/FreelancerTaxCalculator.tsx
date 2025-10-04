@@ -41,6 +41,23 @@ const FreelancerTaxCalculator: React.FC = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Beta Notice */}
+      <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 sm:p-4">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-orange-600 mt-0.5 flex-shrink-0" />
+          <div>
+            <h4 className="font-medium text-orange-800 mb-1 text-sm sm:text-base flex items-center gap-2">
+              Beta Testing
+              <span className="bg-orange-200 text-orange-800 text-xs font-medium px-2 py-0.5 rounded">BETA</span>
+            </h4>
+            <p className="text-xs sm:text-sm text-orange-700 leading-relaxed">
+              This freelancer tax calculator is currently in beta testing. Features and calculations may be refined based on user feedback.
+              Please verify all calculations with official BIR sources.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Input Section */}
       <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <div className="flex items-center gap-3 mb-4 sm:mb-6">

@@ -173,7 +173,7 @@ export const TAX_TYPES: TaxTypeInfo[] = [
   },
   {
     id: 'freelancer',
-    name: 'Freelancer Tax Calculator',
+    name: 'Freelancer Tax Calculator (Beta)',
     description: 'Income tax options, percentage tax, VAT, and filing period',
     rate: '8% - 35%',
     applicableTo: 'Freelancers and self-employed'
